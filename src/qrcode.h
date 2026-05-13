@@ -27,14 +27,6 @@
  * THE SOFTWARE.
  */
 
-/**
- *  Special thanks to Nayuki (https://www.nayuki.io/) from which this library was
- *  heavily inspired and compared against.
- *
- *  See: https://github.com/nayuki/QR-Code-generator/tree/master/cpp
- */
-
-
 #ifndef __QRCODE_H_
 #define __QRCODE_H_
 
@@ -42,17 +34,32 @@
 #include <stdint.h>
 
 
-// QR Code Format Encoding
-#define MODE_NUMERIC        0
-#define MODE_ALPHANUMERIC   1
-#define MODE_BYTE           2
+// QR Code Format Encoding (public API)
+#define QRCODE_MODE_NUMERIC        0
+#define QRCODE_MODE_ALPHANUMERIC   1
+#define QRCODE_MODE_BYTE           2
+
+#ifdef QRCODE_ENABLE_LEGACY
+/* Backwards-compatible legacy macro names (enabled by defining QRCODE_ENABLE_LEGACY)
+   e.g. -DQRCODE_ENABLE_LEGACY in your build */
+#define MODE_NUMERIC        QRCODE_MODE_NUMERIC
+#define MODE_ALPHANUMERIC   QRCODE_MODE_ALPHANUMERIC
+#define MODE_BYTE           QRCODE_MODE_BYTE
+#endif /* QRCODE_ENABLE_LEGACY */
 
 
-// Error Correction Code Levels
-#define ECC_LOW            0
-#define ECC_MEDIUM         1
-#define ECC_QUARTILE       2
-#define ECC_HIGH           3
+// Error Correction Code Levels (public API)
+#define QRCODE_ECC_LOW            0
+#define QRCODE_ECC_MEDIUM         1
+#define QRCODE_ECC_QUARTILE       2
+#define QRCODE_ECC_HIGH           3
+
+#ifdef QRCODE_ENABLE_LEGACY
+#define ECC_LOW            QRCODE_ECC_LOW
+#define ECC_MEDIUM         QRCODE_ECC_MEDIUM
+#define ECC_QUARTILE       QRCODE_ECC_QUARTILE
+#define ECC_HIGH           QRCODE_ECC_HIGH
+#endif /* QRCODE_ENABLE_LEGACY */
 
 
 // If set to non-zero, this library can ONLY produce QR codes at that version
@@ -62,22 +69,36 @@
 #endif
 
 
-// Version Numbers
+// Version Numbers (public API)
 #if LOCK_VERSION == 0
-#define VERSION_AUTO       0
-#endif // LOCK_VERSION == 0
-#define VERSION_MIN        1
-#define VERSION_MAX        40
+#define QRCODE_VERSION_AUTO       0
+#endif /* LOCK_VERSION == 0 */
+#define QRCODE_VERSION_MIN        1
+#define QRCODE_VERSION_MAX        40
+
+#ifdef QRCODE_ENABLE_LEGACY
+#if LOCK_VERSION == 0
+#define VERSION_AUTO       QRCODE_VERSION_AUTO
+#endif /* LOCK_VERSION == 0 */
+#define VERSION_MIN        QRCODE_VERSION_MIN
+#define VERSION_MAX        QRCODE_VERSION_MAX
+#endif /* QRCODE_ENABLE_LEGACY */
 
 
-typedef struct QRCode {
+/* Public QR code type (namespaced). To enable the legacy name 'QRCode',
+   define QRCODE_ENABLE_LEGACY when building. */
+typedef struct qrcode_QRCode {
     uint8_t version;
     uint8_t size;
     uint8_t ecc;
     uint8_t mode;
     uint8_t mask;
     uint8_t *modules;
-} QRCode;
+} qrcode_QRCode;
+
+#ifdef QRCODE_ENABLE_LEGACY
+typedef qrcode_QRCode QRCode;
+#endif /* QRCODE_ENABLE_LEGACY */
 
 
 #ifdef __cplusplus
@@ -85,14 +106,12 @@ extern "C"{
 #endif  /* __cplusplus */
 
 
-
 uint16_t qrcode_getBufferSize(uint8_t version);
 
-int8_t qrcode_initText(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data);
-int8_t qrcode_initBytes(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length);
+int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data);
+int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length);
 
-bool qrcode_getModule(QRCode *qrcode, uint8_t x, uint8_t y);
-
+bool qrcode_getModule(qrcode_QRCode *qrcode, uint8_t x, uint8_t y);
 
 
 #ifdef __cplusplus

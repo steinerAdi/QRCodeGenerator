@@ -5,7 +5,7 @@
  * Major parts were derived from Project Nayuki's library.
  *
  * Copyright (c) 2025 Michael R Sweet
- * Copyright (c) 2017 Richard Moore     (https://github.com/ricmoo/QRCode)
+ * Copyright (c) 2017 Richard Moore     (https://github.com/ricmoo/qrcode_QRCode)
  * Copyright (c) 2017 Project Nayuki    (https://www.nayuki.io/page/qr-code-generator-library)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -632,12 +632,12 @@ static void rs_getRemainder(uint8_t degree, uint8_t *coeff, uint8_t *data, uint8
 #pragma mark - QrCode
 
 static int8_t encodeDataCodewords(BitBucket *dataCodewords, const uint8_t *text, uint16_t length, uint8_t version) {
-    int8_t mode = MODE_BYTE;
+    int8_t mode = QRCODE_MODE_BYTE;
 
     if (isNumeric((char*)text, length)) {
-        mode = MODE_NUMERIC;
-        bb_appendBits(dataCodewords, 1 << MODE_NUMERIC, 4);
-        bb_appendBits(dataCodewords, length, getModeBits(version, MODE_NUMERIC));
+        mode = QRCODE_MODE_NUMERIC;
+        bb_appendBits(dataCodewords, 1 << QRCODE_MODE_NUMERIC, 4);
+        bb_appendBits(dataCodewords, length, getModeBits(version, QRCODE_MODE_NUMERIC));
 
         uint16_t accumData = 0;
         uint8_t accumCount = 0;
@@ -657,9 +657,9 @@ static int8_t encodeDataCodewords(BitBucket *dataCodewords, const uint8_t *text,
         }
 
     } else if (isAlphanumeric((char*)text, length)) {
-        mode = MODE_ALPHANUMERIC;
-        bb_appendBits(dataCodewords, 1 << MODE_ALPHANUMERIC, 4);
-        bb_appendBits(dataCodewords, length, getModeBits(version, MODE_ALPHANUMERIC));
+        mode = QRCODE_MODE_ALPHANUMERIC;
+        bb_appendBits(dataCodewords, 1 << QRCODE_MODE_ALPHANUMERIC, 4);
+        bb_appendBits(dataCodewords, length, getModeBits(version, QRCODE_MODE_ALPHANUMERIC));
 
         uint16_t accumData = 0;
         uint8_t accumCount = 0;
@@ -679,8 +679,8 @@ static int8_t encodeDataCodewords(BitBucket *dataCodewords, const uint8_t *text,
         }
 
     } else {
-        bb_appendBits(dataCodewords, 1 << MODE_BYTE, 4);
-        bb_appendBits(dataCodewords, length, getModeBits(version, MODE_BYTE));
+        bb_appendBits(dataCodewords, 1 << QRCODE_MODE_BYTE, 4);
+        bb_appendBits(dataCodewords, length, getModeBits(version, QRCODE_MODE_BYTE));
         for (uint16_t i = 0; i < length; i++) {
             bb_appendBits(dataCodewords, (char)(text[i]), 8);
         }
@@ -770,13 +770,13 @@ static void performErrorCorrection(uint8_t version, uint8_t ecc, BitBucket *data
 static const uint8_t ECC_FORMAT_BITS = (0x02 << 6) | (0x03 << 4) | (0x00 << 2) | (0x01 << 0);
 
 
-#pragma mark - Public QRCode functions
+#pragma mark - Public qrcode_QRCode functions
 
 uint16_t qrcode_getBufferSize(uint8_t version) {
     return bb_getGridSizeBytes(4 * version + 17);
 }
 
-int8_t qrcode_initBytes(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length) {
+int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length) {
     static uint16_t maxlength[40][4] = {
         // Max bytes for each ECC and VERSION
         {   17,   14,   11,    7 },
@@ -821,16 +821,16 @@ int8_t qrcode_initBytes(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8
         { 2953, 2331, 1663, 1273 }
     };
 
-    if (ecc < ECC_LOW || ecc > ECC_HIGH) { return -1; }
+    if (ecc < QRCODE_ECC_LOW || ecc > QRCODE_ECC_HIGH) { return -1; }
     uint8_t eccFormatBits = (ECC_FORMAT_BITS >> (2 * ecc)) & 0x03;
 
 #if LOCK_VERSION == 0
-    if (version == VERSION_AUTO) {
-    	for (version = VERSION_MIN; version <= VERSION_MAX; version ++) {
+    if (version == QRCODE_VERSION_AUTO) {
+    	for (version = QRCODE_VERSION_MIN; version <= QRCODE_VERSION_MAX; version ++) {
     	    if (maxlength[version - 1][ecc] >= length) { break; }
     	}
-    	if (version > VERSION_MAX) { return -1; }
-    } else if (version < VERSION_MIN || version > VERSION_MAX) { return -1; }
+    	if (version > QRCODE_VERSION_MAX) { return -1; }
+    } else if (version < QRCODE_VERSION_MIN || version > QRCODE_VERSION_MAX) { return -1; }
     uint16_t moduleCount = NUM_RAW_DATA_MODULES[version - 1];
     uint16_t dataCapacity = moduleCount / 8 - NUM_ERROR_CORRECTION_CODEWORDS[eccFormatBits][version - 1];
 #else
@@ -905,13 +905,13 @@ int8_t qrcode_initBytes(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8
     return 0;
 }
 
-int8_t qrcode_initText(QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data) {
+int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data) {
     size_t length = strlen(data);
     if (length > 65535) { return -1; }
     return qrcode_initBytes(qrcode, modules, version, ecc, (uint8_t*)data, (uint16_t)length);
 }
 
-bool qrcode_getModule(QRCode *qrcode, uint8_t x, uint8_t y) {
+bool qrcode_getModule(qrcode_QRCode *qrcode, uint8_t x, uint8_t y) {
     if (x < 0 || x >= qrcode->size || y < 0 || y >= qrcode->size) {
         return false;
     }
@@ -921,11 +921,11 @@ bool qrcode_getModule(QRCode *qrcode, uint8_t x, uint8_t y) {
 }
 
 /*
-uint8_t qrcode_getHexLength(QRCode *qrcode) {
+uint8_t qrcode_getHexLength(qrcode_QRCode *qrcode) {
     return ((qrcode->size * qrcode->size) + 7) / 4;
 }
 
-void qrcode_getHex(QRCode *qrcode, char *result) {
+void qrcode_getHex(qrcode_QRCode *qrcode, char *result) {
 
 }
 */

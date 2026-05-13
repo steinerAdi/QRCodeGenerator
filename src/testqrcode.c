@@ -11,7 +11,7 @@
  * Major parts were derived from Project Nayuki's library.
  *
  * Copyright (c) 2025 by Michael R Sweet
- * Copyright (c) 2017 Richard Moore     (https://github.com/ricmoo/QRCode)
+ * Copyright (c) 2017 Richard Moore     (https://github.com/ricmoo/qrcode_QRCode)
  * Copyright (c) 2017 Project Nayuki    (https://www.nayuki.io/page/qr-code-generator-library)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,11 +54,11 @@ static unsigned char *png_add_unsigned(unsigned val, unsigned char *pngptr, unsi
 int main(int argc, char *argv[]) {
     const char *progname;               // Program name
     int        i;                       // Looping var
-    uint8_t    ecc = ECC_LOW;           // Error correction level
-    uint8_t    version = VERSION_AUTO;  // Version/size
+    uint8_t    ecc = QRCODE_ECC_LOW;           // Error correction level
+    uint8_t    version = QRCODE_VERSION_AUTO;  // Version/size
     const char *text = NULL;            // Text to encode
-    QRCode     qrcode;                  // QR code data
-    uint8_t    qrcodeBytes[qrcode_getBufferSize(VERSION_MAX)];
+    qrcode_QRCode     qrcode;                  // QR code data
+    uint8_t    qrcodeBytes[qrcode_getBufferSize(QRCODE_VERSION_MAX)];
                                         // QR code buffer
     bool       makeSVG = false;         // Output SVG?
 
@@ -79,13 +79,13 @@ int main(int argc, char *argv[]) {
                             fprintf(stderr, "%s: Missing error correction level after '-e'.\n", progname);
                             return 1;
                         } else if (!strcmp(argv[i], "low")) {
-                            ecc = ECC_LOW;
+                            ecc = QRCODE_ECC_LOW;
                         } else if (!strcmp(argv[i], "medium")) {
-                            ecc = ECC_MEDIUM;
+                            ecc = QRCODE_ECC_MEDIUM;
                         } else if (!strcmp(argv[i], "quartile")) {
-                            ecc = ECC_QUARTILE;
+                            ecc = QRCODE_ECC_QUARTILE;
                         } else if (!strcmp(argv[i], "high")) {
-                            ecc = ECC_HIGH;
+                            ecc = QRCODE_ECC_HIGH;
                         } else {
                             fprintf(stderr, "%s: Bad error correction level '-e %s'.\n", progname, argv[i]);
                             return 1;
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
                             return 1;
                         } else {
                             long tempval = strtol(argv[i], NULL, 10);
-                            if (tempval < VERSION_MIN || tempval > VERSION_MAX) {
+                            if (tempval < QRCODE_VERSION_MIN || tempval > QRCODE_VERSION_MAX) {
                                 fprintf(stderr, "%s: Bad version '-v %s'.\n", progname, argv[i]);
                                 return 1;
                             }
