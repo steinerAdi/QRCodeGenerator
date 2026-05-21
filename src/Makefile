@@ -35,10 +35,16 @@ CFLAGS	=	-Os -g
 LDFLAGS	=	-Os -g
 LIBS	=	-lz
 OBJS	=	qrcode.o testqrcode.o
+TARGET  = testqrcode
 
-all:	testqrcode
+all: $(TARGET)
 
-testqrcode: $(OBJS)
+$(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
 
 $(OBJS): qrcode.h
+
+.PHONY: clean
+
+clean: 
+	rm -f $(OBJS) $(TARGET)

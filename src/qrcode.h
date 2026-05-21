@@ -46,11 +46,24 @@
 #define MODE_BYTE QRCODE_MODE_BYTE
 #endif /* QRCODE_ENABLE_LEGACY */
 
-// Error Correction Code Levels (public API)
-#define QRCODE_ECC_LOW 0
-#define QRCODE_ECC_MEDIUM 1
-#define QRCODE_ECC_QUARTILE 2
-#define QRCODE_ECC_HIGH 3
+/**
+ * @brief QR Code Error Correction Code (ECC) Levels.
+ *
+ * @note The numeric values correspond to the specific internal array indexing
+ *       of this library (Medium, Low, High, Quartile) and differ from the
+ *       standard ISO/IEC 18004 sorting sequence.
+ */
+typedef enum
+{
+    /** @brief Medium level: Recovers up to ~15% of data loss. (Default choice for balance) */
+    QRCODE_ECC_MEDIUM = 0,
+    /** @brief Low level: Recovers up to ~7% of data loss. (Maximizes data capacity) */
+    QRCODE_ECC_LOW = 1,
+    /** @brief High level: Recovers up to ~30% of data loss. (Highest safety against damage) */
+    QRCODE_ECC_HIGH = 2,
+    /** @brief Quartile level: Recovers up to ~25% of data loss. (Good for branded/logo codes) */
+    QRCODE_ECC_QUARTILE = 3
+} qrcode_EccLevel;
 
 #ifdef QRCODE_ENABLE_LEGACY
 #define ECC_LOW QRCODE_ECC_LOW
@@ -93,7 +106,7 @@ typedef struct qrcode_QRCode
 {
     /**
      * @brief The QR Code version used for generation.
-     * @details Valid range is @c QRCODE_VERSION_MIN to @c QRCODE_VERSION_MAX. 
+     * @details Valid range is @c QRCODE_VERSION_MIN to @c QRCODE_VERSION_MAX.
      *          Determines the density and theoretical data capacity of the symbol.
      */
     uint8_t version;
@@ -114,7 +127,7 @@ typedef struct qrcode_QRCode
      *          - 2 = High (H)
      *          - 3 = Quartile (Q)
      */
-    uint8_t ecc;
+    qrcode_EccLevel ecc;
 
     /**
      * @brief The data encoding mode utilized for the payload.
@@ -178,7 +191,7 @@ extern "C"
      * @retval 0  Successfully initialized and encoded.
      * @retval -1 Error: The data is too long for the chosen version and ECC level combination.
      */
-    int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data);
+    int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, qrcode_EccLevel ecc, const char *data);
 
     /**
      * @brief Initializes a QR Code and encodes raw binary data (byte array).
@@ -199,7 +212,7 @@ extern "C"
      * @retval 0  Successfully initialized and encoded.
      * @retval -1 Error: The data length exceeds the capacity of the selected version and ECC level.
      */
-    int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length);
+    int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, qrcode_EccLevel ecc, uint8_t *data, uint16_t length);
 
     /**
      * @brief Queries the state (black or white) of a specific module (pixel).

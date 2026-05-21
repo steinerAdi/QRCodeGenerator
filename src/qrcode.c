@@ -878,7 +878,7 @@ static int8_t encodeDataCodewords(BitBucket *dataCodewords, const uint8_t *text,
     return mode;
 }
 
-static void performErrorCorrection(uint8_t version, uint8_t ecc, BitBucket *data) {
+static void performErrorCorrection(uint8_t version, qrcode_EccLevel ecc, BitBucket *data) {
 
     // See: http://www.thonky.com/qr-code-tutorial/structure-final-message
 
@@ -963,7 +963,7 @@ uint16_t qrcode_getBufferSize(uint8_t version) {
     return bb_getGridSizeBytes(4 * version + 17);
 }
 
-int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, uint8_t *data, uint16_t length) {
+int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, qrcode_EccLevel ecc, uint8_t *data, uint16_t length) {
     static uint16_t maxlength[40][4] = {
         // Max bytes for each ECC and VERSION
         {   17,   14,   11,    7 },
@@ -1092,7 +1092,7 @@ int8_t qrcode_initBytes(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version
     return 0;
 }
 
-int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, uint8_t ecc, const char *data) {
+int8_t qrcode_initText(qrcode_QRCode *qrcode, uint8_t *modules, uint8_t version, qrcode_EccLevel ecc, const char *data) {
     size_t length = strlen(data);
     if (length > 65535) { return -1; }
     return qrcode_initBytes(qrcode, modules, version, ecc, (uint8_t*)data, (uint16_t)length);
