@@ -69,18 +69,205 @@ static const uint16_t NUM_RAW_DATA_MODULES[40] = {
        19723, 20891, 22091, 23008, 24272, 25568, 26896, 28256, 29648
 };
 
-// @TODO: Put other LOCK_VERSIONS here
+#elif LOCK_VERSION == 1
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 10, 7, 17, 13 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 1, 1, 1, 1 };
+static const uint16_t NUM_RAW_DATA_MODULES = 208;
+
+#elif LOCK_VERSION == 2
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 16, 10, 28, 22 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 1, 1, 1, 1 };
+static const uint16_t NUM_RAW_DATA_MODULES = 359;
+
 #elif LOCK_VERSION == 3
-
-static const int16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = {
-    26, 15, 44, 36
-};
-
-static const int8_t NUM_ERROR_CORRECTION_BLOCKS[4] = {
-    1, 1, 2, 2
-};
-
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 26, 15, 44, 36 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 1, 1, 2, 2 };
 static const uint16_t NUM_RAW_DATA_MODULES = 567;
+
+#elif LOCK_VERSION == 4
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 36, 20, 64, 52 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 2, 1, 4, 2 };
+static const uint16_t NUM_RAW_DATA_MODULES = 807;
+
+#elif LOCK_VERSION == 5
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 48, 26, 88, 72 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 2, 1, 4, 4 };
+static const uint16_t NUM_RAW_DATA_MODULES = 1079;
+
+#elif LOCK_VERSION == 6
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 64, 36, 112, 96 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 4, 2, 4, 4 };
+static const uint16_t NUM_RAW_DATA_MODULES = 1383;
+
+#elif LOCK_VERSION == 7
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 72, 40, 130, 108 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 4, 2, 5, 6 };
+static const uint16_t NUM_RAW_DATA_MODULES = 1568;
+
+#elif LOCK_VERSION == 8
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 88, 48, 156, 132 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 4, 2, 6, 6 };
+static const uint16_t NUM_RAW_DATA_MODULES = 1936;
+
+#elif LOCK_VERSION == 9
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 110, 60, 192, 160 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 5, 2, 8, 8 };
+static const uint16_t NUM_RAW_DATA_MODULES = 2336;
+
+#elif LOCK_VERSION == 10
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 130, 72, 224, 192 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 5, 4, 8, 8 };
+static const uint16_t NUM_RAW_DATA_MODULES = 2768;
+
+#elif LOCK_VERSION == 11
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 150, 80, 264, 224 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 5, 4, 11, 8 };
+static const uint16_t NUM_RAW_DATA_MODULES = 3232;
+
+#elif LOCK_VERSION == 12
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 176, 96, 308, 260 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 8, 4, 11, 10 };
+static const uint16_t NUM_RAW_DATA_MODULES = 3728;
+
+#elif LOCK_VERSION == 13
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 198, 104, 352, 288 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 9, 4, 16, 12 };
+static const uint16_t NUM_RAW_DATA_MODULES = 4256;
+
+#elif LOCK_VERSION == 14
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 216, 120, 384, 320 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 9, 4, 16, 16 };
+static const uint16_t NUM_RAW_DATA_MODULES = 4651;
+
+#elif LOCK_VERSION == 15
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 240, 132, 432, 360 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 10, 6, 18, 12 };
+static const uint16_t NUM_RAW_DATA_MODULES = 5243;
+
+#elif LOCK_VERSION == 16
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 280, 144, 480, 408 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 10, 6, 16, 17 };
+static const uint16_t NUM_RAW_DATA_MODULES = 5867;
+
+#elif LOCK_VERSION == 17
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 308, 168, 532, 448 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 11, 6, 19, 16 };
+static const uint16_t NUM_RAW_DATA_MODULES = 6523;
+
+#elif LOCK_VERSION == 18
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 338, 180, 588, 504 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 13, 6, 21, 18 };
+static const uint16_t NUM_RAW_DATA_MODULES = 7211;
+
+#elif LOCK_VERSION == 19
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 364, 196, 650, 546 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 14, 7, 25, 21 };
+static const uint16_t NUM_RAW_DATA_MODULES = 7931;
+
+#elif LOCK_VERSION == 20
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 416, 224, 700, 600 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 16, 8, 25, 20 };
+static const uint16_t NUM_RAW_DATA_MODULES = 8683;
+
+#elif LOCK_VERSION == 21
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 442, 224, 750, 644 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 17, 8, 25, 23 };
+static const uint16_t NUM_RAW_DATA_MODULES = 9252;
+
+#elif LOCK_VERSION == 22
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 476, 252, 816, 690 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 17, 9, 34, 23 };
+static const uint16_t NUM_RAW_DATA_MODULES = 10068;
+
+#elif LOCK_VERSION == 23
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 504, 270, 900, 750 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 18, 9, 30, 25 };
+static const uint16_t NUM_RAW_DATA_MODULES = 10916;
+
+#elif LOCK_VERSION == 24
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 560, 300, 960, 810 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 20, 10, 32, 27 };
+static const uint16_t NUM_RAW_DATA_MODULES = 11796;
+
+#elif LOCK_VERSION == 25
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 588, 312, 1050, 870 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 21, 12, 35, 29 };
+static const uint16_t NUM_RAW_DATA_MODULES = 12708;
+
+#elif LOCK_VERSION == 26
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 644, 336, 1110, 952 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 23, 12, 37, 34 };
+static const uint16_t NUM_RAW_DATA_MODULES = 13652;
+
+#elif LOCK_VERSION == 27
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 700, 360, 1200, 1020 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 25, 12, 40, 34 };
+static const uint16_t NUM_RAW_DATA_MODULES = 14628;
+
+#elif LOCK_VERSION == 28
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 728, 390, 1260, 1050 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 26, 13, 42, 35 };
+static const uint16_t NUM_RAW_DATA_MODULES = 15371;
+
+#elif LOCK_VERSION == 29
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 784, 420, 1350, 1140 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 28, 14, 45, 38 };
+static const uint16_t NUM_RAW_DATA_MODULES = 16411;
+
+#elif LOCK_VERSION == 30
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 812, 450, 1440, 1200 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 29, 15, 48, 40 };
+static const uint16_t NUM_RAW_DATA_MODULES = 17483;
+
+#elif LOCK_VERSION == 31
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 868, 480, 1530, 1290 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 31, 16, 51, 43 };
+static const uint16_t NUM_RAW_DATA_MODULES = 18587;
+
+#elif LOCK_VERSION == 32
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 924, 510, 1620, 1350 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 33, 17, 54, 45 };
+static const uint16_t NUM_RAW_DATA_MODULES = 19723;
+
+#elif LOCK_VERSION == 33
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 980, 540, 1710, 1440 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 35, 18, 57, 48 };
+static const uint16_t NUM_RAW_DATA_MODULES = 20891;
+
+#elif LOCK_VERSION == 34
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1036, 570, 1800, 1530 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 37, 19, 60, 51 };
+static const uint16_t NUM_RAW_DATA_MODULES = 22091;
+
+#elif LOCK_VERSION == 35
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1064, 570, 1890, 1590 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 38, 19, 63, 53 };
+static const uint16_t NUM_RAW_DATA_MODULES = 23008;
+
+#elif LOCK_VERSION == 36
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1120, 600, 1980, 1680 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 40, 20, 66, 56 };
+static const uint16_t NUM_RAW_DATA_MODULES = 24272;
+
+#elif LOCK_VERSION == 37
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1204, 630, 2100, 1770 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 43, 21, 70, 59 };
+static const uint16_t NUM_RAW_DATA_MODULES = 25568;
+
+#elif LOCK_VERSION == 38
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1260, 660, 2220, 1860 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 45, 22, 74, 62 };
+static const uint16_t NUM_RAW_DATA_MODULES = 26896;
+
+#elif LOCK_VERSION == 39
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1316, 720, 2310, 1950 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 47, 24, 77, 65 };
+static const uint16_t NUM_RAW_DATA_MODULES = 28256;
+
+#elif LOCK_VERSION == 40
+static const uint16_t NUM_ERROR_CORRECTION_CODEWORDS[4] = { 1372, 750, 2430, 2040 };
+static const uint8_t NUM_ERROR_CORRECTION_BLOCKS[4] = { 49, 25, 81, 68 };
+static const uint16_t NUM_RAW_DATA_MODULES = 29648;
 
 #else
 
