@@ -31,7 +31,7 @@
 
 .POSIX:
 
-CFLAGS	=	-Os -g
+CFLAGS	=	-Os -g -Wall -Wextra -Wconversion
 LDFLAGS	=	-Os -g
 LIBS	=	-lz
 OBJS	=	qrcode.o testqrcode.o

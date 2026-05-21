@@ -41,8 +41,8 @@
 
 
 // Image export constants...
-#define QR_SCALE    5                  // Nominal size of modules
-#define QR_PADDING  4                  // White padding around QR code
+#define QR_SCALE    (unsigned) 5                  // Nominal size of modules
+#define QR_PADDING  (unsigned) 4                  // White padding around QR code
 
 
 // Local function for PNG output...
@@ -244,7 +244,7 @@ int main(int argc, char *argv[]) {
 
         zstream.next_in   = (Bytef *)line;
         zstream.next_out  = (Bytef *)pngptr;
-        zstream.avail_out = (uInt)(sizeof(pngbuf) - (pngptr - pngbuf));
+        zstream.avail_out = (uInt)(sizeof(pngbuf) - (unsigned long) (pngptr - pngbuf));
 
         // All lines start with the "None" (0) filter...
         line[0] = 0;
@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
 	    memset(line + 1, 0xff, linelen);
 
 	    for (x = 0, lineptr = line + 1 + xoff, bit = 128 >> xmod; x < qrcode.size; x ++) {
-		bool qrset = qrcode_getModule(&qrcode, x, y);
+		bool qrset = qrcode_getModule(&qrcode, (uint8_t) x, (uint8_t) y);
 
 		for (x0 = 0; x0 < QR_SCALE; x0 ++) {
 		    if (qrset) {
@@ -347,8 +347,8 @@ png_add_crc(unsigned char *pngdata,	// I - Pointer to start of chunk data
   unsigned		c;		// CRC value
 
 
-  c = crc32(0, Z_NULL, 0);
-  c = crc32(c, pngdata, (uInt)(pngptr - pngdata));
+  c = (unsigned) crc32(0, Z_NULL, 0);
+  c = (unsigned) crc32(c, pngdata, (uInt)(pngptr - pngdata));
 
   // Append the CRC to the buffer...
   return (png_add_unsigned(c, pngptr, pngend));
@@ -366,13 +366,13 @@ png_add_unsigned(unsigned      val,	// I - Value to append
 {
   // Append the value to the buffer...
   if (pngptr < pngend)
-    *pngptr++ = (val >> 24) & 0xff;
+    *pngptr++ = (unsigned char) (val >> 24) & 0xff;
   if (pngptr < pngend)
-    *pngptr++ = (val >> 16) & 0xff;
+    *pngptr++ = (unsigned char) (val >> 16) & 0xff;
   if (pngptr < pngend)
-    *pngptr++ = (val >> 8) & 0xff;
+    *pngptr++ = (unsigned char) (val >> 8) & 0xff;
   if (pngptr < pngend)
-    *pngptr++ = val & 0xff;
+    *pngptr++ = (unsigned char) val & 0xff;
 
   return (pngptr);
 }
